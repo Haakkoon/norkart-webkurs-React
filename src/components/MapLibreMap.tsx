@@ -9,6 +9,7 @@ import { getHoydeFromPunkt } from '../api/getHoydeFromPunkt';
 import { useEffect, useState } from 'react';
 import { Overlay } from './Overlay';
 import DrawComponent from './DrawComponent';
+import { SearchBar, type Address } from './SearchBar';
 
 const TRONDHEIM_COORDS: [number, number] = [10.40565401, 63.4156575];
 
@@ -32,6 +33,7 @@ export const MapLibreMap = () => {
     undefined
   );
   const [clickPoint, setClickPoint] = useState<LngLat | undefined>(undefined);
+  const [address, setAddress] = useState<Address | null>(null);
 
   useEffect(() => {
     console.log(pointHoyde, clickPoint);
@@ -56,8 +58,13 @@ export const MapLibreMap = () => {
       onClick={onMapClick}
     >
       <Overlay>
-        <h2>Dette er et overlay</h2>
-        <p>Legg til funksjonalitet knyttet til kartet.</p>
+        <SearchBar setAddress={setAddress} />
+        {address && (
+          <MapFlyTo
+            lng={address.PayLoad.Posisjon.X}
+            lat={address.PayLoad.Posisjon.Y}
+          />
+        )}
       </Overlay>
       <DrawComponent />
       {clickPoint && pointHoyde !== undefined && (
