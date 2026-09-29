@@ -4,6 +4,8 @@ Dere setter opp en React-applikasjon med et Maplibre-kart, og utvider den med ka
 
 Spør gjerne om noe er uklart.
 
+Heisann
+
 ## Nyttige lenker
 
 - [React](https://react.dev/reference/react)

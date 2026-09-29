@@ -4,7 +4,7 @@ import {
   type RequestTransformFunction,
 } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { RMap, useMap } from 'maplibre-react-components';
+import { RMap, RPopup, useMap } from 'maplibre-react-components';
 import { getHoydeFromPunkt } from '../api/getHoydeFromPunkt';
 import { useEffect, useState } from 'react';
 import { Overlay } from './Overlay';
@@ -23,7 +23,7 @@ type NorkartBasemapVariant =
   | 'transparent'
   | 'hybrid'
   | 'ortofoto';
-const NORKART_BASEMAP_VARIANT: NorkartBasemapVariant = 'standard';
+const NORKART_BASEMAP_VARIANT: NorkartBasemapVariant = 'hybrid';
 
 const NORKART_BASEMAP_STYLE = `${KVP_BASE_URL}norkart-basemap/${NORKART_BASEMAP_VARIANT}/style.json`;
 
@@ -60,6 +60,15 @@ export const MapLibreMap = () => {
         <p>Legg til funksjonalitet knyttet til kartet.</p>
       </Overlay>
       <DrawComponent />
+      {clickPoint && pointHoyde !== undefined && (
+        <RPopup longitude={clickPoint.lng} latitude={clickPoint.lat}>
+          <div style={{ color: 'black' }}>
+            <p>Lat: {clickPoint.lat.toFixed(5)}</p>
+            <p>Lng: {clickPoint.lng.toFixed(5)}</p>
+            <p>Høyde: {pointHoyde.toFixed(1)} moh.</p>
+          </div>
+        </RPopup>
+      )}
     </RMap>
   );
 };
